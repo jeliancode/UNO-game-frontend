@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+/* Estilos generales de la pantalla */
+.main-screen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #110224;
+  color: white;
+  font-family: "Audiowide", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Icono de perfil */
+.profile-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Botón de logout */
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.logout-button button {
+  background-color: #300353;
+  color: #05f205;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Audiowide";
+  font-size: 1rem;
+}
+
+.logout-button button:hover {
+  background-color: #4a1a6b;
+}
+
+/* Contenedor de las opciones del juego */
+.game-options {
+  display: flex;
+  gap: 200px;
+}
+
+/* Estilos comunes para las opciones del juego */
+.game-option {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Opción "Create Game" */
+.create-game {
+  background-color: #d00000;
+}
+
+/* Opción "Join Game" */
+.join-game {
+  background-color: #00418c;
+}
+
+/* Texto de las opciones */
+.game-option h2 {
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+  transform: rotate(-30deg);
+}
+
+/* Estilos del formulario de creación y unión */
+.create-form,
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+}
+
+.create-form .form-group,
+.join-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+    width: 80%;
+}
+
+.create-form label,
+.join-form label {
+  font-size: 1rem;
+}
+
+.create-form input,
+.create-form textarea,
+.join-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #110224;
+  font-family: "Audiowide", cursive;
+}
+
+.create-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.create-form .form-buttons,
+.join-form .form-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.create-form .submit-button,
+.create-form .cancel-button,
+.join-form .submit-button,
+.join-form .cancel-button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Audiowide", cursive;
+  font-size: 1rem;
+}
+
+.create-form .submit-button,
+.join-form .submit-button {
+  background-color: #300353;
+  color: #05f205;
+  border: none;
+}
+
+.create-form .submit-button:hover,
+.join-form .submit-button:hover {
+  background-color: #4a1a6b;
+}
+
+.create-form .cancel-button,
+.join-form .cancel-button {
+  background-color: #000;
+  color: white;
+  border: none;
+}
+
+.create-form .cancel-button:hover,
+.join-form .cancel-button:hover {
+  background-color: #161616;
+}

@@ -1,15 +1,17 @@
 import React from "react";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import MainScreen from "./components/MainScreen";
+import MenuScreen from "./components/MenuScreen";
+import GameScreen from "./components/GameScreen";
 import "./index.css";
-import "./mainScreen.css"
+import "./menuScreen.css"
+import "./gameScreen.css"
 
 function App() {
   return (
     <div className="App">
 
-      <MainScreen/>
+      <GameScreen/>
     </div>
   );
 }

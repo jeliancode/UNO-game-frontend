@@ -1,0 +1,279 @@
+/* Estilos generales de la pantalla */
+.game-screen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #110224;
+  font-family: "Audiowide", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor principal del juego */
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor de los cuadros centrales (mazo y descarte) */
+.center-cards {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30%;
+}
+
+/* Estilos para el mazo de cartas (negro con la palabra UNO) */
+.deck-card {
+  width: 8.5vw; 
+  height: 12vw; 
+  background-color: black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+/* Estilos para el cuadro de descartes */
+.discard-card {
+  width: 8.5vw; 
+  height: 12vw;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  position: relative;
+}
+
+/* Estilos para los valores de la carta en el descarte */
+.card-value {
+  position: absolute;
+  font-size: 1.5rem; 
+}
+
+.card-value.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.card-value.center {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-value.bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Contenedor de las cartas de los rivales */
+.opponents-cards {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos para los grupos de cartas de los rivales */
+.opponent-group {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: auto;
+}
+
+.opponent-group.top {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto 0 0 0;
+  width: 400px;
+}
+
+.opponent-group.left {
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  flex-direction: column;
+  margin: 0 0 0 30px;
+  height: 400px;
+}
+
+.opponent-group.right {
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  flex-direction: column;
+  margin: 0 30px 0 0;
+  height: 400px;
+}
+
+/* Estilos para las cartas de los rivales (reversos) */
+.opponent-card {
+  width: 8vw; 
+  height: 12vw; 
+  background-color: black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ajuste de cartas lado izquierdo */
+.opponent-group.left .opponent-card {
+  transform: rotate(90deg);
+  margin-top: -70px;
+}
+
+/* Ajuste cartas del lado derecho */
+.opponent-group.right .opponent-card {
+  transform: rotate(-90deg);
+  margin-top: -70px;
+}
+
+/* Ajuste de cartas del lado superior */
+.opponent-group.top .opponent-card {
+  margin-left: -30px;
+}
+
+/* Ajuste para la primera carta de cada grupo (no debe tener margen negativo) */
+.opponent-group.top .opponent-card:first-child,
+.opponent-group.left .opponent-card:first-child,
+.opponent-group.right .opponent-card:first-child {
+  margin-left: 0;
+  margin-top: 0;
+}
+
+/* Contenedor de las cartas del jugador */
+.player-cards {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 auto 0;
+  width: auto;
+}
+
+/* Estilos para las cartas del jugador */
+.player-card {
+  width: 8vw; 
+  height: 12vw; 
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem; 
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-left: -30px;
+  position: relative;
+  z-index: 1;
+}
+
+.player-card:first-child {
+  margin-left: 0;
+}
+
+.player-card:hover {
+  z-index: 2;
+  transform: translateY(-10px);
+  transition: transform 0.2s ease;
+}
+
+/* Estilos para las imágenes de las cartas especiales */
+.player-card img {
+  width: 60%; 
+  height: auto;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 1200px) {
+  .deck-card,
+  .discard-card {
+    width: 15vw;
+    height: 20vw;
+    font-size: 2rem;
+  }
+
+  .player-card {
+    width: 12vw;
+    height: 18vw;
+    font-size: 1.5rem;
+  }
+
+  .opponent-card {
+    width: 10vw;
+    height: 15vw;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .deck-card,
+  .discard-card {
+    width: 20vw;
+    height: 25vw;
+    font-size: 1.8rem;
+  }
+
+  .player-card {
+    width: 15vw;
+    height: 22vw;
+    font-size: 1.2rem;
+  }
+
+  .opponent-card {
+    width: 12vw;
+    height: 18vw;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .deck-card,
+  .discard-card {
+    width: 25vw;
+    height: 30vw;
+    font-size: 1.5rem;
+  }
+
+  .player-card {
+    width: 18vw;
+    height: 25vw;
+    font-size: 1rem;
+  }
+
+  .opponent-card {
+    width: 15vw;
+    height: 20vw;
+    font-size: 0.8rem;
+  }
+}
