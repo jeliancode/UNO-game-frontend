@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import MainScreen from "./components/MainScreen";
 import "./index.css";
+import "./mainScreen.css"
 
 function App() {
-  const [showLogin, setShowLogin] = useState(true);
-
-  const toggleView = () => {
-    setShowLogin(!showLogin);
-  };
-
   return (
     <div className="App">
-      {showLogin ? <Login toggleView={toggleView} /> : <SignUp toggleView={toggleView} />}
+
+      <MainScreen/>
     </div>
   );
 }

@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+/* Estilos generales de la pantalla */
+.main-screen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #110224;
+  color: white;
+  font-family: "Audiowide", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Icono de perfil */
+.profile-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Botón de logout */
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.logout-button button {
+  background-color: #300353;
+  color: #05f205;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Audiowide";
+  font-size: 1rem;
+}
+
+.logout-button button:hover {
+  background-color: #4a1a6b;
+}
+
+/* Contenedor de las opciones del juego */
+.game-options {
+  display: flex;
+  gap: 200px;
+}
+
+/* Estilos comunes para las opciones del juego */
+.game-option {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+
+/* Opción "Create Game" */
+.create-game {
+  background-color: #D00000;
+}
+
+/* Opción "Join Game" */
+.join-game {
+  background-color: #00418C; 
+}
+
+/* Texto de las opciones */
+.game-option h2 {
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+   transform: rotate(-30deg);
+}
