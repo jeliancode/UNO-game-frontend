@@ -9,9 +9,12 @@ import { useAuth } from "./context/AuthContext";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/MenuScreen";
+import Room from "./components/Room";
+import GameScreen from "./components/GameScreen";
 import "./index.css";
 import "./gameScreen.css";
 import "./menuScreen.css";
+import "./room.css";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -31,6 +34,8 @@ const App = () => {
           path="/"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
         />
+        <Route path="/room" element={<Room />} />
+        <Route path="/game" element={<GameScreen />} />
       </Routes>
     </Router>
   );

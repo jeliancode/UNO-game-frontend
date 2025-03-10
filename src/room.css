@@ -1,0 +1,65 @@
+/* Estilos generales */
+.room-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #110224;
+  color: white;
+  font-family: "Audiowide", cursive;
+}
+
+/* Contenedor de los iconos de los jugadores */
+.players-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+/* Iconos de los jugadores */
+.player-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #561887;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #05f205;
+  font-size: 24px;
+}
+
+/* Contenedor del ID del juego */
+.game-id-container {
+  margin-bottom: 20px;
+}
+
+/* Cuadro de texto para el ID del juego */
+.game-id-input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Botón de inicio */
+.start-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #561887;
+  color: #05f205;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.start-button:hover {
+  background-color: #6a1f9e;
+}

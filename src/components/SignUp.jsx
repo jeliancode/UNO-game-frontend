@@ -12,7 +12,7 @@ const SignUp = () => {
   });
   const { setIsAuthenticated, setUser } = useAuth();
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Hook para navegación programática
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +35,7 @@ const SignUp = () => {
       setUser(response.user);
       setIsAuthenticated(true);
       setError("");
-      navigate("/"); // Redirige a la página principal después del registro
+      navigate("/");
     } catch (error) {
       setError(error.message || "Error al registrarse");
     }
@@ -46,10 +46,7 @@ const SignUp = () => {
       <div className="title-container">
         <h1>UNO</h1>
         <p className="or-text">or:</p>
-        <button
-          className="nav-button"
-          onClick={() => navigate("/login")} // Usamos navigate para ir a login
-        >
+        <button className="nav-button" onClick={() => navigate("/login")}>
           Login
         </button>
       </div>

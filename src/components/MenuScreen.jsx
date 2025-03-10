@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createGame, joinGame, logout } from "../services/api";
 
 const MenuScreen = () => {
+  const navigate = useNavigate();
+
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showJoinForm, setShowJoinForm] = useState(false);
   const [createFormData, setCreateFormData] = useState({
@@ -15,7 +19,6 @@ const MenuScreen = () => {
   const handleCreateGameClick = () => {
     setShowCreateForm(!showCreateForm);
   };
-
   const handleJoinGameClick = () => {
     setShowJoinForm(!showJoinForm);
   };
@@ -36,16 +39,51 @@ const MenuScreen = () => {
     });
   };
 
-  const handleCreateSubmit = (e) => {
+  const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos del formulario (Create Game):", createFormData);
-    // Aquí puedes agregar la lógica para crear el juego
+    try {
+      const response = await createGame(createFormData);
+      if (response.success) {
+        const gameId = response.data.gameId;
+        navigate(`/room/${gameId}`);
+      } else {
+        console.error("Error al crear el juego:", response.error);
+        alert("Error al crear el juego. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error al crear el juego:", error.message);
+      alert(`Error: ${error.message}`);
+    }
   };
 
-  const handleJoinSubmit = (e) => {
+  const handleJoinSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos del formulario (Join Game):", joinFormData);
-    // Aquí puedes agregar la lógica para unirse al juego
+    try {
+      const response = await joinGame(joinFormData.idGame);
+      if (response.success) {
+        navigate(`/room/${joinFormData.idGame}`);
+      } else {
+        console.error("Error al unirse al juego:", response.error);
+        alert("Error al unirse al juego. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error al unirse al juego:", error.message);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response.success) {
+        localStorage.removeItem("access_token");
+        window.location.href = "/login";
+      } else {
+        alert("Error al cerrar sesión:", response.error.message);
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const handleCreateCancel = () => {
@@ -67,7 +105,7 @@ const MenuScreen = () => {
 
       {/* Botón de logout en la esquina superior derecha */}
       <div className="logout-button">
-        <button>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
 
       {/* Contenedor de las opciones del juego */}

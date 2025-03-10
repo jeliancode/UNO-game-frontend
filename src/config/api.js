@@ -6,3 +6,8 @@ export const AUTH_ENDPOINTS = {
   LOGOUT: "/auth/logout",
   PROFILE: "/auth/profile",
 };
+
+export const GAME_ENDPOINTS = {
+  CREATE_GAME: "/games/create",
+  JOIN_GAME: "/games/join",
+};

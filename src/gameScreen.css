@@ -35,8 +35,8 @@
 
 /* Estilos para el mazo de cartas (negro con la palabra UNO) */
 .deck-card {
-  width: 8.5vw; 
-  height: 12vw; 
+  width: 8.5vw;
+  height: 12vw;
   background-color: black;
   border-radius: 10px;
   display: flex;
@@ -50,7 +50,7 @@
 
 /* Estilos para el cuadro de descartes */
 .discard-card {
-  width: 8.5vw; 
+  width: 8.5vw;
   height: 12vw;
   border-radius: 10px;
   display: flex;
@@ -65,7 +65,7 @@
 /* Estilos para los valores de la carta en el descarte */
 .card-value {
   position: absolute;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
 }
 
 .card-value.top-left {
@@ -129,8 +129,8 @@
 
 /* Estilos para las cartas de los rivales (reversos) */
 .opponent-card {
-  width: 8vw; 
-  height: 12vw; 
+  width: 8vw;
+  height: 12vw;
   background-color: black;
   border-radius: 10px;
   display: flex;
@@ -183,13 +183,13 @@
 
 /* Estilos para las cartas del jugador */
 .player-card {
-  width: 8vw; 
-  height: 12vw; 
+  width: 8vw;
+  height: 12vw;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: bold;
   color: white;
   cursor: pointer;
@@ -210,7 +210,7 @@
 
 /* Estilos para las imágenes de las cartas especiales */
 .player-card img {
-  width: 60%; 
+  width: 60%;
   height: auto;
 }
 
@@ -220,12 +220,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 6vw; 
+  width: 6vw;
   height: 6vw;
   border-radius: 50%;
-  background-color: #300353; 
-  color: #05F205; 
-  font-size: 1vw; 
+  background-color: #300353;
+  color: #05f205;
+  font-size: 1vw;
   font-family: "Audiowide", cursive;
   font-weight: bold;
   border: none;
@@ -238,7 +238,7 @@
 }
 
 .uno-button:hover {
-  background-color: #4a057a; 
+  background-color: #4a057a;
   transform: translate(-50%, -50%) scale(1.1);
 }
 
@@ -249,11 +249,11 @@
 /* Estilos para el botón "CHALLENGE" */
 .challenge-button {
   position: absolute;
-  width:7vw; 
-  height: 3vw; 
+  width: 7vw;
+  height: 3vw;
   background-color: red;
   color: white;
-  font-size: 1vw; 
+  font-size: 1vw;
   font-weight: bold;
   border: none;
   border-radius: 2.5vw;
@@ -261,7 +261,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 10); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 10);
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -272,7 +272,6 @@
 
 .challenge-button:active {
   transform: translate(-50%, -50%) scale(100);
-
 }
 
 /* Posicionamiento del botón "CHALLENGE" para el jugador superior */
@@ -284,7 +283,7 @@
 
 /* Posicionamiento del botón "CHALLENGE" para el jugador izquierdo */
 .challenge-button.left {
-  top: 100%; 
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -319,25 +318,25 @@
 
 /* Estilos para el botón "Go Out" */
 .go-out-button {
-  position: fixed; 
-  top: 2vw; 
-  right: 2vw; 
-  width: 3vw; 
+  position: fixed;
+  top: 2vw;
+  right: 2vw;
+  width: 3vw;
   height: 3vw;
   background-color: transparent;
-  border: none; 
-  cursor: pointer; 
-  padding: 0; 
+  border: none;
+  cursor: pointer;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s ease; 
+  transition: transform 0.2s ease;
 }
 
 .go-out-button img {
-  width: 100%; 
-  height: 100%; 
-  object-fit: contain; 
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .go-out-button:hover {
@@ -346,6 +345,20 @@
 
 .go-out-button:active {
   transform: scale(0.9);
+}
+
+/* Estilos para el temporizador */
+.timer {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: "Audiowide", cursive;
 }
 
 @media (max-width: 768px) {

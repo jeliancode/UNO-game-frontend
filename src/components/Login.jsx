@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { login } from "../services/api";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate para redirigir
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const { setIsAuthenticated, setUser, setAccessToken } = useAuth(); // Agregar setAccessToken
+  const { setIsAuthenticated, setUser, setAccessToken } = useAuth();
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Inicializar useNavigate para redirigir
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,15 +30,13 @@ const Login = () => {
       const response = await login(credentials);
 
       if (response.success) {
-        // Almacenar el token y actualizar el estado
-        setAccessToken(response.data.access_token); // Almacenar el token
-        setUser(response.data.user); // Almacenar el usuario, si es necesario
+        setAccessToken(response.data.access_token);
+        setUser(response.data.user);
         setIsAuthenticated(true);
-        setError(""); // Limpiar cualquier mensaje de error
-        navigate("/"); // Redirigir a la página de inicio
+        setError("");
+        navigate("/");
       } else {
-        // Si el login no es exitoso, mostrar el mensaje de error
-        setError(response.error || "Error al iniciar sesión");
+        setError(response.error.message || "Error al iniciar sesión");
       }
     } catch (error) {
       setError(error.message || "Error al iniciar sesión");
