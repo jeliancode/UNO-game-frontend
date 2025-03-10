@@ -13,11 +13,11 @@ const MenuScreen = () => {
   });
 
   const handleCreateGameClick = () => {
-    setShowCreateForm(!showCreateForm); // Alternar la visibilidad del formulario de Create Game
+    setShowCreateForm(!showCreateForm);
   };
 
   const handleJoinGameClick = () => {
-    setShowJoinForm(!showJoinForm); // Alternar la visibilidad del formulario de Join Game
+    setShowJoinForm(!showJoinForm);
   };
 
   const handleCreateChange = (e) => {
@@ -49,11 +49,11 @@ const MenuScreen = () => {
   };
 
   const handleCreateCancel = () => {
-    setShowCreateForm(false); // Ocultar el formulario de Create Game
+    setShowCreateForm(false);
   };
 
   const handleJoinCancel = () => {
-    setShowJoinForm(false); // Ocultar el formulario de Join Game
+    setShowJoinForm(false);
   };
 
   return (

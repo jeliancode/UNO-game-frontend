@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { login } from "../services/api";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate para redirigir
 
-const Login = ({ toggleView }) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const { setIsAuthenticated, setUser } = useAuth();
+  const { setIsAuthenticated, setUser, setAccessToken } = useAuth(); // Agregar setAccessToken
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Inicializar useNavigate para redirigir
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,27 +21,41 @@ const Login = ({ toggleView }) => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const credentials = {
-      username: formData.username,
-      password: formData.password,
-    };
-    const response = await login(credentials);
-    setUser(response.user);
-    setIsAuthenticated(true);
-    setError("");
-  } catch (error) {
-    setError(error.message || "Error al iniciar sesión");
-  }
-};
+    e.preventDefault();
+    try {
+      const credentials = {
+        username: formData.username,
+        password: formData.password,
+      };
+      const response = await login(credentials);
+
+      if (response.success) {
+        // Almacenar el token y actualizar el estado
+        setAccessToken(response.data.access_token); // Almacenar el token
+        setUser(response.data.user); // Almacenar el usuario, si es necesario
+        setIsAuthenticated(true);
+        setError(""); // Limpiar cualquier mensaje de error
+        navigate("/"); // Redirigir a la página de inicio
+      } else {
+        // Si el login no es exitoso, mostrar el mensaje de error
+        setError(response.error || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      setError(error.message || "Error al iniciar sesión");
+    }
+  };
 
   return (
     <div className="app-container">
       <div className="title-container">
         <h1>UNO</h1>
         <p className="or-text">or:</p>
-        <button className="nav-button" onClick={toggleView}>Sign-up</button>
+        <button
+          className="nav-button"
+          onClick={() => (window.location.href = "/signup")}
+        >
+          Sign-up
+        </button>
       </div>
       <div className="form-container">
         <div className="signup-container">
@@ -68,7 +84,9 @@ const Login = ({ toggleView }) => {
               />
             </div>
             {error && <p className="error-message">{error}</p>}
-            <button type="submit" className="submit-button">Login</button>
+            <button type="submit" className="submit-button">
+              Login
+            </button>
           </form>
         </div>
       </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_BASE_URL, AUTH_ENDPOINTS } from "../config/api";
 
 const api = axios.create({
-  baseURL:API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -27,7 +27,11 @@ export const register = async (userData) => {
 export const login = async (credentials) => {
   try {
     const response = await api.post(AUTH_ENDPOINTS.LOGIN, credentials);
-    return response.data;
+    if (response.data.success) {
+      return response.data;
+    } else {
+      throw new Error(response.data.error || "Error desconocido");
+    }
   } catch (error) {
     console.error("Error en la solicitud:", error);
     if (error.response) {
@@ -38,7 +42,6 @@ export const login = async (credentials) => {
     }
   }
 };
-
 
 export const logout = async () => {
   try {

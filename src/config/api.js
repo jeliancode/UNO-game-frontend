@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://backend_uno_game:3000/api";
+export const API_BASE_URL = "http://localhost:3000/api";
 
 export const AUTH_ENDPOINTS = {
   REGISTER: "/auth/register",

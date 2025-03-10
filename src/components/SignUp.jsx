@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { register } from "../services/api";
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 
-const SignUp = ({ toggleView }) => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -11,6 +12,7 @@ const SignUp = ({ toggleView }) => {
   });
   const { setIsAuthenticated, setUser } = useAuth();
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Hook para navegación programática
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,30 +22,36 @@ const SignUp = ({ toggleView }) => {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const userData = {
-      username: formData.username,
-      email: formData.email,
-      age: formData.age,
-      password: formData.password,
-    };
-    const response = await register(userData);
-    setUser(response.user);
-    setIsAuthenticated(true);
-    setError("");
-  } catch (error) {
-    setError(error.message || "Error al registrarse");
-  }
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userData = {
+        username: formData.username,
+        email: formData.email,
+        age: formData.age,
+        password: formData.password,
+      };
+      const response = await register(userData);
+      setUser(response.user);
+      setIsAuthenticated(true);
+      setError("");
+      navigate("/"); // Redirige a la página principal después del registro
+    } catch (error) {
+      setError(error.message || "Error al registrarse");
+    }
+  };
 
   return (
     <div className="app-container">
       <div className="title-container">
         <h1>UNO</h1>
         <p className="or-text">or:</p>
-        <button className="nav-button" onClick={toggleView}>Login</button>
+        <button
+          className="nav-button"
+          onClick={() => navigate("/login")} // Usamos navigate para ir a login
+        >
+          Login
+        </button>
       </div>
       <div className="form-container">
         <div className="signup-container">
@@ -94,7 +102,9 @@ const handleSubmit = async (e) => {
               />
             </div>
             {error && <p className="error-message">{error}</p>}
-            <button type="submit" className="submit-button">Sign-up</button>
+            <button type="submit" className="submit-button">
+              Sign-up
+            </button>
           </form>
         </div>
       </div>
