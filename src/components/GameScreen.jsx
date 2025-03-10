@@ -1,9 +1,10 @@
 import React from "react";
-import SkipImage from "../assets/skip.png"; 
-import ReverseImage from "../assets/reverse.png"; 
-import PlusTwoImage from "../assets/plus-two.png"; 
-import PlusFourImage from "../assets/plus-four.png"; 
-import WildCardImage from "../assets/change-color.png"; 
+import SkipImage from "../assets/skip.png";
+import ReverseImage from "../assets/reverse.png";
+import PlusTwoImage from "../assets/plus-two.png";
+import PlusFourImage from "../assets/plus-four.png";
+import WildCardImage from "../assets/change-color.png";
+import GoOutImage from "../assets/go-out.png";
 
 const GameScreen = () => {
   // Datos de ejemplo para las cartas del jugador y la carta en el descarte
@@ -14,20 +15,25 @@ const GameScreen = () => {
     { color: "yellow", value: "⇆", image: ReverseImage }, // Símbolo para Reverse
     { color: "blue", value: "+2", image: PlusTwoImage },
     { color: "black", value: "+4", image: PlusFourImage },
-    { color: "black", value: "", image: WildCardImage }, // Símbolo para Wild
+    { color: "black", value: "🎨​", image: WildCardImage }, // Símbolo para Wild
   ];
 
-  const discardCard = { color: "red", value: "7" }; 
+  const discardCard = { color: "red", value: "7" };
 
   // Datos de ejemplo para las cartas de los rivales
   const opponentsCards = [
-    { player: "opponent1", cards: 5 }, 
+    { player: "opponent1", cards: 5 },
     { player: "opponent2", cards: 3 },
-    { player: "opponent3", cards: 4 }, 
+    { player: "opponent3", cards: 4 },
   ];
 
   return (
     <div className="game-screen">
+      {/* Botón en la esquina superior derecha */}
+      <button className="go-out-button">
+        <img src={GoOutImage} alt="Go Out" />
+      </button>
+
       {/* Contenedor principal */}
       <div className="game-container">
         {/* Mazo de cartas y descarte */}
@@ -36,6 +42,11 @@ const GameScreen = () => {
           <div className="deck-card">
             <span>UNO</span>
           </div>
+
+          {/* Botón circular "SAY UNO" */}
+          <button className="uno-button">
+            SAY UNO
+          </button>
 
           {/* Cuadro de descartes */}
           <div className="discard-card" style={{ backgroundColor: discardCard.color }}>
@@ -54,6 +65,10 @@ const GameScreen = () => {
                 <span>UNO</span>
               </div>
             ))}
+            {/* Botón "CHALLENGE" para el jugador superior */}
+            <button className="challenge-button top">
+              CHALLENGE
+            </button>
           </div>
 
           {/* Jugador izquierdo */}
@@ -63,6 +78,10 @@ const GameScreen = () => {
                 <span>UNO</span>
               </div>
             ))}
+            {/* Botón "CHALLENGE" para el jugador izquierdo */}
+            <button className="challenge-button left">
+              CHALLENGE
+            </button>
           </div>
 
           {/* Jugador derecho */}
@@ -72,6 +91,10 @@ const GameScreen = () => {
                 <span>UNO</span>
               </div>
             ))}
+            {/* Botón "CHALLENGE" para el jugador derecho */}
+            <button className="challenge-button right">
+              CHALLENGE
+            </button>
           </div>
         </div>
 

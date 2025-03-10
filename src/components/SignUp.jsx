@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { register } from "../services/api";
 
 const SignUp = ({ toggleView }) => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,8 @@ const SignUp = ({ toggleView }) => {
     age: "",
     password: "",
   });
+  const { setIsAuthenticated, setUser } = useAuth();
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +20,23 @@ const SignUp = ({ toggleView }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Datos del formulario:", formData);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const userData = {
+      username: formData.username,
+      email: formData.email,
+      age: formData.age,
+      password: formData.password,
+    };
+    const response = await register(userData);
+    setUser(response.user);
+    setIsAuthenticated(true);
+    setError("");
+  } catch (error) {
+    setError(error.message || "Error al registrarse");
+  }
+};
 
   return (
     <div className="app-container">
@@ -76,6 +93,7 @@ const SignUp = ({ toggleView }) => {
                 required
               />
             </div>
+            {error && <p className="error-message">{error}</p>}
             <button type="submit" className="submit-button">Sign-up</button>
           </form>
         </div>
