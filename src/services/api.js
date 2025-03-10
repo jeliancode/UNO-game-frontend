@@ -1,27 +1,61 @@
-import axios from 'axios';
+import axios from "axios";
+import { API_BASE_URL, AUTH_ENDPOINTS } from "../config/api";
 
-// Obtén la URL de la API desde las variables de entorno
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Usamos la URL del .env
+  baseURL:API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
-export const getGames = async () => {
+export const register = async (userData) => {
   try {
-    const response = await api.get('/games');  // Aquí pon la ruta que quieres consultar
+    const response = await api.post(AUTH_ENDPOINTS.REGISTER, userData);
+    if (!response || !response.data) {
+      throw new Error("No se recibió una respuesta válida del servidor");
+    }
     return response.data;
   } catch (error) {
-    console.error("Error fetching games:", error);
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw new Error("Error de conexión con el servidor");
+    }
   }
 };
 
-export const createGame = async (gameData) => {
+export const login = async (credentials) => {
   try {
-    const response = await api.post('/games', gameData);  // Ruta para crear un juego
+    const response = await api.post(AUTH_ENDPOINTS.LOGIN, credentials);
     return response.data;
   } catch (error) {
-    console.error("Error creating game:", error);
+    console.error("Error en la solicitud:", error);
+    if (error.response) {
+      console.error("Respuesta del servidor:", error.response.data);
+      throw error.response.data;
+    } else {
+      throw new Error("No se pudo conectar con el servidor");
+    }
   }
 };
+
+
+export const logout = async () => {
+  try {
+    const response = await api.post(AUTH_ENDPOINTS.LOGOUT);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const getProfile = async (userId) => {
+  try {
+    const response = await api.get(`${AUTH_ENDPOINTS.PROFILE}/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export default api;

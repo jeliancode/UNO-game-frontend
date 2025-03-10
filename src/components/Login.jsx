@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { login } from "../services/api";
 
 const Login = ({ toggleView }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const { setIsAuthenticated, setUser } = useAuth();
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,10 +18,21 @@ const Login = ({ toggleView }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Datos del formulario:", formData);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const credentials = {
+      username: formData.username,
+      password: formData.password,
+    };
+    const response = await login(credentials);
+    setUser(response.user);
+    setIsAuthenticated(true);
+    setError("");
+  } catch (error) {
+    setError(error.message || "Error al iniciar sesión");
+  }
+};
 
   return (
     <div className="app-container">
@@ -52,6 +67,7 @@ const Login = ({ toggleView }) => {
                 required
               />
             </div>
+            {error && <p className="error-message">{error}</p>}
             <button type="submit" className="submit-button">Login</button>
           </form>
         </div>
