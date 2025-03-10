@@ -45,6 +45,7 @@ const MenuScreen = () => {
       const response = await createGame(createFormData);
       if (response.success) {
         const gameId = response.data.gameId;
+        joinGame(gameId);
         navigate(`/room/${gameId}`);
       } else {
         console.error("Error al crear el juego:", response.error);

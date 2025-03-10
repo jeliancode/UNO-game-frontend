@@ -3,20 +3,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
   background-color: #110224;
   color: white;
   font-family: "Audiowide", cursive;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Título */
+h2 {
+  margin-bottom: 20px;
+  font-size: 2em;
 }
 
 /* Contenedor de los iconos de los jugadores */
 .players-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  gap: 20px;
 }
 
 /* Iconos de los jugadores */
@@ -30,6 +40,13 @@
   justify-content: center;
   color: #05f205;
   font-size: 24px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.player-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Contenedor del ID del juego */
@@ -47,19 +64,26 @@
   color: black;
   border: none;
   border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Botón de inicio */
 .start-button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 18px;
   background-color: #561887;
   color: #05f205;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .start-button:hover {
   background-color: #6a1f9e;
+  transform: scale(1.05);
+}
+
+.start-button:active {
+  background-color: #4e1684;
 }

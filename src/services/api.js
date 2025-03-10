@@ -5,7 +5,6 @@ const getToken = () => {
   return localStorage.getItem("access_token");
 };
 
-// Configura Axios para enviar cookies automáticamente
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -111,6 +110,26 @@ export const joinGame = async (gameId) => {
     } else {
       throw new Error("Error de conexión con el servidor");
     }
+  }
+};
+
+export const getGamePlayers = async (gameId) => {
+  try {
+    const response = await api.get(`${GAME_ENDPOINTS.GET_PLAYERS}/${gameId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los jugadores:", error);
+    throw error;
+  }
+};
+
+export const startGame = async (gameId) => {
+  try {
+    const response = await api.post(`${GAME_ENDPOINTS.START_GAME}/${gameId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al iniciar el juego:", error);
+    throw error;
   }
 };
 

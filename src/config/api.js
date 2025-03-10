@@ -10,4 +10,6 @@ export const AUTH_ENDPOINTS = {
 export const GAME_ENDPOINTS = {
   CREATE_GAME: "/games/create",
   JOIN_GAME: "/games/join",
+  START_GAME: "/game/start",
+  GET_PLAYERS: "/games/players",
 };
