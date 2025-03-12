@@ -20,3 +20,7 @@ export const DECKS_ENPOINTS = {
   DEAL_CARDS: "/decks/deal",
   INITIALIZE_DISCARD_PILE: "/decks/discard-pile",
 };
+
+export const CARD_ENDPOINTS = {
+  GET_CARD_BY_ID: "/cards/:id",
+};

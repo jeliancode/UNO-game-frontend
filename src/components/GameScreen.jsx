@@ -26,34 +26,60 @@ const GameScreen = () => {
 
         const gameState = await getGameState(id);
         if (gameState.success) {
-          const { players, discardPile } = gameState.data;
-
-          const currentPlayer = players.find((p) => p.username === username);
-          if (!currentPlayer) {
-            alert("El usuario no está en la partida.");
-            return;
-          }
-          setPlayerCards(currentPlayer?.hand || []);
-
-          setDiscardCard(
-            discardPile.length > 0 ? discardPile[discardPile.length - 1] : null
-          );
-
-          const filteredOpponents = players
-            .filter((p) => p.username !== username)
-            .map((opponent) => ({
-              username: opponent.username,
-              cards: opponent.hand.length,
-            }));
-
-          setOpponentsCards(filteredOpponents);
+          updateGameState(gameState.data);
         }
       } catch (error) {
         console.error("Error al iniciar el juego:", error);
       }
     };
 
+    const updateGameState = (gameState) => {
+      const { players, discardPile } = gameState;
+
+      const currentPlayer = players.find((p) => p.username === username);
+      if (!currentPlayer) {
+        alert("El usuario no está en la partida.");
+        return;
+      }
+      setPlayerCards(currentPlayer.hand || []);
+
+      setDiscardCard(
+        discardPile.length > 0 ? discardPile[discardPile.length - 1] : null
+      );
+
+      const filteredOpponents = players
+        .filter((p) => p.username !== username)
+        .map((opponent) => ({
+          username: opponent.username,
+          cards: opponent.hand.length,
+        }));
+
+      setOpponentsCards(filteredOpponents);
+    };
+
     startGame();
+
+    const eventSource = new EventSource(
+      `http://localhost:3000/api/sse-game/${id}`
+    );
+
+    eventSource.onmessage = (event) => {
+      try {
+        const gameState = JSON.parse(event.data);
+        updateGameState(gameState);
+      } catch (error) {
+        console.error("Error procesando datos SSE:", error);
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("Error en la conexión SSE:", error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
   }, [id, username]);
 
   return (

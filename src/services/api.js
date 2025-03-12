@@ -4,6 +4,7 @@ import {
   AUTH_ENDPOINTS,
   GAME_ENDPOINTS,
   DECKS_ENPOINTS,
+  CARD_ENDPOINTS,
 } from "../config/api";
 
 const getToken = () => {
@@ -197,3 +198,18 @@ export const initializeDiscardPile = async (gameId) => {
 };
 
 export default api;
+
+export const getCardDetails = async (cardId) => {
+  try {
+    const response = await api.get(
+      `${CARD_ENDPOINTS.GET_CARD_BY_ID}/${cardId}`
+    );
+    if (!response || !response.data) {
+      throw new Error("No se recibió una respuesta válida del servidor");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener carta ", error);
+    throw error;
+  }
+};
