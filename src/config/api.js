@@ -22,5 +22,5 @@ export const DECKS_ENPOINTS = {
 };
 
 export const CARD_ENDPOINTS = {
-  GET_CARD_BY_ID: "/cards/:id",
+  GET_CARD_BY_ID: "/cards",
 };

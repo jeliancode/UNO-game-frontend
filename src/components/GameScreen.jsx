@@ -5,6 +5,7 @@ import {
   dealCards,
   getGameState,
   initializeDiscardPile,
+  getCardDetails,
 } from "../services/api";
 import GoOutImage from "../assets/go-out.png";
 
@@ -33,7 +34,7 @@ const GameScreen = () => {
       }
     };
 
-    const updateGameState = (gameState) => {
+    const updateGameState = async (gameState) => {
       const { players, discardPile } = gameState;
 
       const currentPlayer = players.find((p) => p.username === username);
@@ -41,11 +42,23 @@ const GameScreen = () => {
         alert("El usuario no está en la partida.");
         return;
       }
-      setPlayerCards(currentPlayer.hand || []);
 
-      setDiscardCard(
-        discardPile.length > 0 ? discardPile[discardPile.length - 1] : null
+      const playerCardsDetails = await Promise.all(
+        currentPlayer.hand.map(async (cardId) => {
+          const response = await getCardDetails(cardId);
+          return response.data;
+        })
       );
+      setPlayerCards(playerCardsDetails);
+
+      if (discardPile.length > 0) {
+        const discardCardResponse = await getCardDetails(
+          discardPile[discardPile.length - 1]
+        );
+        setDiscardCard(discardCardResponse.data);
+      } else {
+        setDiscardCard(null);
+      }
 
       const filteredOpponents = players
         .filter((p) => p.username !== username)
@@ -63,10 +76,10 @@ const GameScreen = () => {
       `http://localhost:3000/api/sse-game/${id}`
     );
 
-    eventSource.onmessage = (event) => {
+    eventSource.onmessage = async (event) => {
       try {
         const gameState = JSON.parse(event.data);
-        updateGameState(gameState);
+        await updateGameState(gameState);
       } catch (error) {
         console.error("Error procesando datos SSE:", error);
       }
@@ -99,7 +112,9 @@ const GameScreen = () => {
                 {Array(opponent.cards)
                   .fill()
                   .map((_, i) => (
-                    <div key={i} className="card back"></div>
+                    <div key={i} className="card back">
+                      UNO
+                    </div>
                   ))}
               </div>
             </div>
@@ -110,10 +125,16 @@ const GameScreen = () => {
       {/* Área central */}
       <div className="center-cards">
         <div className="deck-area">
-          <div className="card deck">Mazo</div>
-          <div className="card discard">
-            {discardCard ? discardCard.value : "Vacío"}
-          </div>
+          <div className="card deck">UNO</div>
+          {discardCard && (
+            <div
+              className="card discard"
+              style={{ backgroundColor: discardCard.color }}
+            >
+              <p>{discardCard.value}</p>
+              {discardCard.symbol && <p>{discardCard.symbol}</p>}
+            </div>
+          )}
         </div>
         <button className="uno-button">SAY UNO!</button>
       </div>
@@ -121,8 +142,13 @@ const GameScreen = () => {
       {/* Cartas del jugador */}
       <div className="player-hand">
         {playerCards.map((card, index) => (
-          <div key={index} className="card">
-            {card.value}
+          <div
+            key={index}
+            className="card"
+            style={{ backgroundColor: card.color }}
+          >
+            <p>{card.value}</p>
+            {card.symbol && <p>{card.symbol}</p>}
           </div>
         ))}
       </div>

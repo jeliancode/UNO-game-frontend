@@ -103,13 +103,11 @@
 .discard {
   width: 80px;
   height: 120px;
-  background-color: red;
   color: white;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
   font-weight: bold;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -117,7 +115,6 @@
 /* Botón UNO */
 .uno-button {
   padding: 10px 20px;
-  font-size: 1.2rem;
   font-weight: bold;
   background-color: #300353;
   border: none;
@@ -142,14 +139,16 @@
 .player-hand .card {
   width: 80px;
   height: 120px;
-  background-color: yellow;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
   font-weight: bold;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+  font-size: 2vw;
 }
 
 /* Botón de salida */
