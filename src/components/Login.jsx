@@ -31,7 +31,12 @@ const Login = () => {
 
       if (response.success) {
         setAccessToken(response.data.access_token);
-        setUser(response.data.user);
+        const userData = {
+          username: response.data.username,
+          userId: response.data.userId,
+        };
+        setUser(userData);
+        localStorage.setItem("username", response.data.username);
         setIsAuthenticated(true);
         setError("");
         navigate("/");

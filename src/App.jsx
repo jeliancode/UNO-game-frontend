@@ -34,8 +34,8 @@ const App = () => {
           path="/"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
         />
-        <Route path="/room" element={<Room />} />
-        <Route path="/game" element={<GameScreen />} />
+        <Route path="/room/:id" element={<Room />} />
+        <Route path="/games/:id" element={<GameScreen />} />
       </Routes>
     </Router>
   );

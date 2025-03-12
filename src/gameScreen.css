@@ -1,18 +1,20 @@
-/* Estilos generales de la pantalla */
-.game-screen {
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+/* Contenedor principal */
+.game-container {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  background-color: #110224;
-  font-family: "Audiowide", cursive;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #110224;
+  font-family: "Audiowide";
 }
 
-/* Contenedor principal del juego */
-.game-container {
-  position: relative;
+/* Contenedor de los oponentes */
+.opponents-container {
+  position: absolute;
   width: 100%;
   height: 100%;
   display: flex;
@@ -20,385 +22,145 @@
   align-items: center;
 }
 
-/* Contenedor de los cuadros centrales (mazo y descarte) */
+/* Estilo general de los oponentes */
+.opponent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Posición del oponente superior */
+.opponent-top {
+  top: 0vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Posición del oponente izquierdo */
+.opponent-left {
+  left: -8vw;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* Posición del oponente derecho */
+.opponent-right {
+  right: -8vw;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+/* Cartas de los oponentes */
+.opponent-hand {
+  display: flex;
+}
+
+/* Cartas boca abajo (oponentes) */
+.card.back {
+  width: 80px;
+  height: 120px;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Área central (mazo y descarte) */
 .center-cards {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 30%;
+  gap: 20px;
 }
 
-/* Estilos para el mazo de cartas (negro con la palabra UNO) */
-.deck-card {
-  width: 8.5vw;
-  height: 12vw;
+/* Mazo y pila de descartes */
+.deck-area {
+  display: flex;
+  align-items: center;
+  gap: 10vw;
+}
+
+/* Estilo de la carta del mazo */
+.deck {
+  width: 80px;
+  height: 120px;
   background-color: black;
+  color: white;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo de la carta de la pila de descartes */
+.discard {
+  width: 80px;
+  height: 120px;
+  background-color: red;
   color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón UNO */
+.uno-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #300353;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  color: #05f205;
+  font-family: "Audiowide";
 }
 
-/* Estilos para el cuadro de descartes */
-.discard-card {
-  width: 8.5vw;
-  height: 12vw;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: white;
-  position: relative;
-}
-
-/* Estilos para los valores de la carta en el descarte */
-.card-value {
+/* Cartas del jugador (abajo) */
+.player-hand {
   position: absolute;
-  font-size: 1.5rem;
-}
-
-.card-value.top-left {
-  top: 10px;
-  left: 10px;
-}
-
-.card-value.center {
-  font-size: 3rem;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.card-value.bottom-right {
-  bottom: 10px;
-  right: 10px;
-}
-
-/* Contenedor de las cartas de los rivales */
-.opponents-cards {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-/* Estilos para los grupos de cartas de los rivales */
-.opponent-group {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: auto;
 }
 
-.opponent-group.top {
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: auto 0 0 0;
-  width: 400px;
-}
-
-.opponent-group.left {
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  flex-direction: column;
-  margin: 0 0 0 30px;
-  height: 400px;
-}
-
-.opponent-group.right {
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  flex-direction: column;
-  margin: 0 30px 0 0;
-  height: 400px;
-}
-
-/* Estilos para las cartas de los rivales (reversos) */
-.opponent-card {
-  width: 8vw;
-  height: 12vw;
-  background-color: black;
+/* Estilo de las cartas del jugador */
+.player-hand .card {
+  width: 80px;
+  height: 120px;
+  background-color: yellow;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: white;
-  position: relative;
-  z-index: 1;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Ajuste de cartas lado izquierdo */
-.opponent-group.left .opponent-card {
-  transform: rotate(90deg);
-  margin-top: -70px;
-}
-
-/* Ajuste cartas del lado derecho */
-.opponent-group.right .opponent-card {
-  transform: rotate(-90deg);
-  margin-top: -70px;
-}
-
-/* Ajuste de cartas del lado superior */
-.opponent-group.top .opponent-card {
-  margin-left: -30px;
-}
-
-/* Ajuste para la primera carta de cada grupo (no debe tener margen negativo) */
-.opponent-group.top .opponent-card:first-child,
-.opponent-group.left .opponent-card:first-child,
-.opponent-group.right .opponent-card:first-child {
-  margin-left: 0;
-  margin-top: 0;
-}
-
-/* Contenedor de las cartas del jugador */
-.player-cards {
+/* Botón de salida */
+.exit-button {
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0 auto 0;
-  width: auto;
-}
-
-/* Estilos para las cartas del jugador */
-.player-card {
-  width: 8vw;
-  height: 12vw;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  margin-left: -30px;
-  position: relative;
-  z-index: 1;
-}
-
-.player-card:first-child {
-  margin-left: 0;
-}
-
-.player-card:hover {
-  z-index: 2;
-  transform: translateY(-10px);
-  transition: transform 0.2s ease;
-}
-
-/* Estilos para las imágenes de las cartas especiales */
-.player-card img {
-  width: 60%;
-  height: auto;
-}
-
-/* Estilos para el botón circular "SAY UNO" */
-.uno-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 6vw;
-  height: 6vw;
-  border-radius: 50%;
-  background-color: #300353;
-  color: #05f205;
-  font-size: 1vw;
-  font-family: "Audiowide", cursive;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.uno-button:hover {
-  background-color: #4a057a;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.uno-button:active {
-  transform: translate(-50%, -50%) scale(0.9);
-}
-
-/* Estilos para el botón "CHALLENGE" */
-.challenge-button {
-  position: absolute;
-  width: 7vw;
-  height: 3vw;
-  background-color: red;
-  color: white;
-  font-size: 1vw;
-  font-weight: bold;
-  border: none;
-  border-radius: 2.5vw;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 10);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.challenge-button:hover {
-  background-color: #a10a0a;
-  transform: scale(1.1);
-}
-
-.challenge-button:active {
-  transform: translate(-50%, -50%) scale(100);
-}
-
-/* Posicionamiento del botón "CHALLENGE" para el jugador superior */
-.challenge-button.top {
-  top: 50%;
-  left: 100%; /* Coloca el botón a la derecha del grupo de cartas */
-  transform: translateY(-50%);
-}
-
-/* Posicionamiento del botón "CHALLENGE" para el jugador izquierdo */
-.challenge-button.left {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Posicionamiento del botón "CHALLENGE" para el jugador derecho */
-.challenge-button.right {
-  top: 100%;
-  right: 50%;
-  transform: translateX(50%);
-}
-/* Media queries para pantallas más pequeñas */
-@media (max-width: 1200px) {
-  .deck-card,
-  .discard-card {
-    width: 15vw;
-    height: 20vw;
-    font-size: 2rem;
-  }
-
-  .player-card {
-    width: 12vw;
-    height: 18vw;
-    font-size: 1.5rem;
-  }
-
-  .opponent-card {
-    width: 10vw;
-    height: 15vw;
-    font-size: 1.2rem;
-  }
-}
-
-/* Estilos para el botón "Go Out" */
-.go-out-button {
-  position: fixed;
-  top: 2vw;
-  right: 2vw;
-  width: 3vw;
-  height: 3vw;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.go-out-button img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.go-out-button:hover {
-  transform: scale(1.1);
-}
-
-.go-out-button:active {
-  transform: scale(0.9);
-}
-
-/* Estilos para el temporizador */
-.timer {
-  position: fixed;
   top: 10px;
   left: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-family: "Audiowide", cursive;
+  cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .deck-card,
-  .discard-card {
-    width: 20vw;
-    height: 25vw;
-    font-size: 1.8rem;
-  }
-
-  .player-card {
-    width: 15vw;
-    height: 22vw;
-    font-size: 1.2rem;
-  }
-
-  .opponent-card {
-    width: 12vw;
-    height: 18vw;
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .deck-card,
-  .discard-card {
-    width: 25vw;
-    height: 30vw;
-    font-size: 1.5rem;
-  }
-
-  .player-card {
-    width: 18vw;
-    height: 25vw;
-    font-size: 1rem;
-  }
-
-  .opponent-card {
-    width: 15vw;
-    height: 20vw;
-    font-size: 0.8rem;
-  }
+.exit-button img {
+  width: 40px;
+  height: 40px;
 }

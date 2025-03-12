@@ -1,68 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getGamePlayers, startGame } from "../services/api";
-import { useAuth } from "../context/AuthContext";
-import "../room.css";
+import { startGame } from "../services/api";
+import PlayerIcon from "../assets/cuenta.png";
 
 const Room = () => {
-  const { gameId } = useParams();
-  const { user } = useAuth();
+  const { id: gameId } = useParams();
   const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
-  const [creator, setCreator] = useState(null);
 
   useEffect(() => {
-    const fetchPlayers = async () => {
-      try {
-        const response = await getGamePlayers(gameId);
-        if (response.success) {
-          setPlayers(response.players);
-          setCreator(response.creator);
-        }
-      } catch (error) {
-        console.error("Error al obtener jugadores:", error.message);
-      }
+    const eventSource = new EventSource(
+      `http://localhost:3000/api/sse-players/${gameId}`
+    );
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const updatedPlayers = data.players;
+      setPlayers(updatedPlayers);
     };
 
-    fetchPlayers();
+    eventSource.onerror = (error) => {
+      console.error("Error en la conexión SSE:", error);
+      console.error("Estado de la conexión:", eventSource.readyState);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
   }, [gameId]);
 
   const handleStartGame = async () => {
     try {
-      const response = await startGame(gameId);
-      if (response.success) {
-        navigate(`/game/${gameId}`);
-      } else {
-        alert("Error al iniciar el juego");
-      }
+      await startGame(gameId);
+      navigate(`/games/${gameId}`);
     } catch (error) {
-      console.error("Error al iniciar el juego:", error.message);
+      console.error("Error al iniciar el juego:", error);
+      alert("No se pudo iniciar el juego. Inténtalo de nuevo.", error);
     }
   };
 
   return (
-    <div className="room-container">
-      <h2>Sala de espera</h2>
-      {/* Mostrar jugadores en fila */}
-      <div className="players-container">
+    <div className="room-screen">
+      <div className="players-row">
         {players.map((player) => (
-          <div key={player.id} className="player-icon">
-            {player.username[0].toUpperCase()}
+          <div key={player.id} className="player-item">
+            <img src={PlayerIcon} alt="Player" className="player-icon" />
+            <span className="player-username">{player.username}</span>
           </div>
         ))}
       </div>
 
-      {/* Cuadro de texto para el ID del juego */}
-      <div className="game-id-container">
-        <input type="text" value={gameId} readOnly className="game-id-input" />
+      <div className="game-id-box">
+        <span>Game ID: {gameId}</span>
       </div>
 
-      {/* Botón de inicio */}
-      {user.id === creator && (
-        <button className="start-button" onClick={handleStartGame}>
-          Iniciar juego
-        </button>
-      )}
+      <button className="start-button" onClick={handleStartGame}>
+        START
+      </button>
     </div>
   );
 };

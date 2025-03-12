@@ -10,6 +10,13 @@ export const AUTH_ENDPOINTS = {
 export const GAME_ENDPOINTS = {
   CREATE_GAME: "/games/create",
   JOIN_GAME: "/games/join",
-  START_GAME: "/game/start",
+  START_GAME: "/games/start",
   GET_PLAYERS: "/games/players",
+  GET_STATE: "/games/state",
+};
+
+export const DECKS_ENPOINTS = {
+  INITIALIZE_DECK: "/decks/initialize",
+  DEAL_CARDS: "/decks/deal",
+  INITIALIZE_DISCARD_PILE: "/decks/discard-pile",
 };
