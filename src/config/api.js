@@ -24,3 +24,7 @@ export const DECKS_ENPOINTS = {
 export const CARD_ENDPOINTS = {
   GET_CARD_BY_ID: "/cards",
 };
+
+export const TURNS_ROUTES = {
+  GET_PLAYER_TURN: "/turns/playerTurn",
+};

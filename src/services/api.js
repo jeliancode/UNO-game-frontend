@@ -5,6 +5,7 @@ import {
   GAME_ENDPOINTS,
   DECKS_ENPOINTS,
   CARD_ENDPOINTS,
+  TURNS_ROUTES,
 } from "../config/api";
 
 const getToken = () => {
@@ -197,8 +198,6 @@ export const initializeDiscardPile = async (gameId) => {
   }
 };
 
-export default api;
-
 export const getCardDetails = async (cardId) => {
   try {
     const response = await api.get(
@@ -213,3 +212,21 @@ export const getCardDetails = async (cardId) => {
     throw error;
   }
 };
+
+export const getPlayerTurn = async (turnData, id) => {
+  try {
+    const response = await api.post(
+      `${TURNS_ROUTES.GET_PLAYER_TURN}/${id}`,
+      turnData
+    );
+    if (!response || !response.data) {
+      throw new Error("No se recibió una respuesta válida del servidor");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener siguiente turno ", error);
+    throw error;
+  }
+};
+
+export default api;

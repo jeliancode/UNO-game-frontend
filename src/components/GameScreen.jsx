@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   initializeDeck,
@@ -6,6 +6,7 @@ import {
   getGameState,
   initializeDiscardPile,
   getCardDetails,
+  getPlayerTurn,
 } from "../services/api";
 import GoOutImage from "../assets/go-out.png";
 
@@ -15,8 +16,62 @@ const GameScreen = () => {
   const [playerCards, setPlayerCards] = useState([]);
   const [discardCard, setDiscardCard] = useState(null);
   const [opponentsCards, setOpponentsCards] = useState([]);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(null);
+  const [direction, setDirection] = useState("clockwise");
+  const [timer, setTimer] = useState(10);
+  const intervalRef = useRef(null);
+
   const storedUsername = localStorage.getItem("username") || "";
   const [username] = useState(storedUsername);
+
+  const handleNextTurn = async () => {
+    try {
+      const gameState = await getGameState(id);
+      if (!gameState.success) {
+        console.error("Error al obtener el estado del juego");
+        return;
+      }
+
+      const { currentPlayerIndex, direction } = gameState.data;
+
+      if (currentPlayerIndex === null || currentPlayerIndex === undefined) {
+        console.error("currentPlayerIndex es null o undefined");
+        return;
+      }
+
+      const turnData = {
+        direction: direction,
+        currentPlayerIndex: currentPlayerIndex,
+        step: 1,
+      };
+
+      const response = await getPlayerTurn(turnData, id);
+      if (response.success) {
+        setCurrentPlayerIndex(response.data.currentPlayerIndex);
+        setDirection(response.data.direction);
+        resetTimer(); // Reinicia el temporizador
+      }
+    } catch (error) {
+      console.error("Error al avanzar el turno:", error);
+    }
+  };
+
+  // Reiniciar el temporizador y llamar a `handleNextTurn` automáticamente
+  const resetTimer = () => {
+    setTimer(10);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          handleNextTurn(); // Llama automáticamente al siguiente turno
+          return 10;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
 
   useEffect(() => {
     const startGame = async () => {
@@ -35,7 +90,10 @@ const GameScreen = () => {
     };
 
     const updateGameState = async (gameState) => {
-      const { players, discardPile } = gameState;
+      const { players, discardPile, currentPlayerIndex, direction } = gameState;
+
+      setCurrentPlayerIndex(currentPlayerIndex);
+      setDirection(direction);
 
       const currentPlayer = players.find((p) => p.username === username);
       if (!currentPlayer) {
@@ -61,13 +119,16 @@ const GameScreen = () => {
       }
 
       const filteredOpponents = players
-        .filter((p) => p.username !== username)
-        .map((opponent) => ({
-          username: opponent.username,
-          cards: opponent.hand.length,
-        }));
+        .map((p, index) => ({
+          username: p.username,
+          cards: p.hand.length,
+          isTurn: index === currentPlayerIndex,
+        }))
+        .filter((p) => p.username !== username);
 
       setOpponentsCards(filteredOpponents);
+
+      resetTimer();
     };
 
     startGame();
@@ -92,11 +153,17 @@ const GameScreen = () => {
 
     return () => {
       eventSource.close();
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [id, username]);
 
   return (
     <div className="game-container">
+      {/* Temporizador en la esquina superior derecha */}
+      <div className="timer-container">
+        <p>Tiempo restante: {timer} segundos</p>
+      </div>
+
       {/* Oponentes */}
       <div className="opponents-container">
         {opponentsCards.map((opponent, index) => {
@@ -106,7 +173,12 @@ const GameScreen = () => {
           if (index === 2) opponentClass = "opponent-right";
 
           return (
-            <div key={index} className={`opponent ${opponentClass}`}>
+            <div
+              key={index}
+              className={`opponent ${opponentClass} ${
+                opponent.isTurn ? "highlight-turn" : ""
+              }`}
+            >
               <p>{opponent.username}</p>
               <div className="opponent-hand">
                 {Array(opponent.cards)
@@ -140,7 +212,11 @@ const GameScreen = () => {
       </div>
 
       {/* Cartas del jugador */}
-      <div className="player-hand">
+      <div
+        className={`player-hand ${
+          currentPlayerIndex === opponentsCards.length ? "highlight-turn" : ""
+        }`}
+      >
         {playerCards.map((card, index) => (
           <div
             key={index}
